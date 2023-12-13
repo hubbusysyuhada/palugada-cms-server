@@ -1,0 +1,38 @@
+[
+  {
+    "name": "user"
+  },
+  {
+    "name": "catalogs"
+  },
+  {
+    "name": "categories"
+  },
+  {
+    "name": "sub_categories"
+  },
+  {
+    "name": "items"
+  },
+  {
+    "name": "racks"
+  },
+  {
+    "name": "suppliers"
+  },
+  {
+    "name": "supplies"
+  },
+  {
+    "name": "transactions"
+  },
+  {
+    "name": "roles"
+  },
+  {
+    "name": "route_permissions"
+  },
+  {
+    "name": "employees"
+  }
+]

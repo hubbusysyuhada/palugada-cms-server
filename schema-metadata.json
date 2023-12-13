@@ -1,0 +1,999 @@
+{
+  "schema": {
+    "tables": [
+      {
+        "name": "user",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "external_id",
+            "type": "varchar",
+            "length": 255,
+            "unique": true,
+            "index": true,
+            "nullable": false,
+            "isProtected": true
+          },
+          {
+            "name": "password",
+            "type": "password",
+            "nullable": false,
+            "isProtected": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "role",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 1,
+              "targetColumn": 0,
+              "onUpdate": "CASCADE",
+              "onDelete": "CASCADE"
+            }
+          }
+        ],
+        "isProtected": true,
+        "isOpen": false
+      },
+      {
+        "name": "roles",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": true,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "permissions",
+            "type": "relation",
+            "relation": {
+              "relationType": "OneToMany",
+              "isOwner": true,
+              "targetTable": 2,
+              "targetColumn": 3,
+              "onUpdate": "CASCADE",
+              "onDelete": "CASCADE"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "feature_permissions",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": true,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "role",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 1,
+              "targetColumn": 3,
+              "onUpdate": "CASCADE",
+              "onDelete": "CASCADE"
+            }
+          }
+        ],
+        "isOpen": false,
+        "error": ""
+      },
+      {
+        "name": "employees",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "helped_transactions",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToMany",
+              "isOwner": false,
+              "targetTable": 11,
+              "targetColumn": 3,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "main_mechanic_transactions",
+            "type": "relation",
+            "relation": {
+              "relationType": "OneToMany",
+              "isOwner": true,
+              "targetTable": 11,
+              "targetColumn": 3,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "catalogs",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "categories",
+            "type": "relation",
+            "relation": {
+              "relationType": "OneToMany",
+              "isOwner": true,
+              "targetTable": 5,
+              "targetColumn": 3,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "categories",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "catalog_id",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 4,
+              "targetColumn": 3,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "sub_categories",
+            "type": "relation",
+            "relation": {
+              "relationType": "OneToMany",
+              "isOwner": true,
+              "targetTable": 6,
+              "targetColumn": 3,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "sub_categories",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "category_id",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 5,
+              "targetColumn": 4,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "items",
+            "type": "relation",
+            "relation": {
+              "relationType": "OneToMany",
+              "isOwner": true,
+              "targetTable": 10,
+              "targetColumn": 6,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "racks",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "storage_number",
+            "type": "integer",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "items",
+            "type": "relation",
+            "relation": {
+              "relationType": "OneToMany",
+              "isOwner": true,
+              "targetTable": 10,
+              "targetColumn": 5,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "suppliers",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "account_number",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "bank_name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "account_name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "address",
+            "type": "tinytext",
+            "isProtected": false,
+            "default": null,
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "contact_number",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "supplies",
+            "type": "relation",
+            "relation": {
+              "relationType": "OneToMany",
+              "isOwner": true,
+              "targetTable": 9,
+              "targetColumn": 2,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "isOpen": false,
+        "error": ""
+      },
+      {
+        "name": "supplies",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "supplier_id",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 8,
+              "targetColumn": 8,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "total_price",
+            "type": "integer",
+            "isProtected": false,
+            "default": "0",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "entry_date",
+            "type": "timestamp",
+            "isProtected": false,
+            "default": "new Date()",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "invoice_number",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "is_paid",
+            "type": "boolean",
+            "isProtected": false,
+            "default": false,
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "due_date",
+            "type": "timestamp",
+            "isProtected": false,
+            "default": "new Date(new Date().setDate(new Date().getDate() + 7))",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255
+          },
+          {
+            "name": "amount",
+            "type": "integer",
+            "isProtected": false,
+            "default": "0",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "items",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToMany",
+              "isOwner": false,
+              "targetTable": 10,
+              "targetColumn": 8,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "items",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "unique_code",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": true,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "buying_price",
+            "type": "integer",
+            "isProtected": false,
+            "default": "0",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "selling_price",
+            "type": "integer",
+            "isProtected": false,
+            "default": "0",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "rack_id",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 7,
+              "targetColumn": 4,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "sub_category_id",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 6,
+              "targetColumn": 4,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "stock",
+            "type": "integer",
+            "isProtected": false,
+            "default": "0",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "supplies",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToMany",
+              "isOwner": true,
+              "targetTable": 9,
+              "targetColumn": 9,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "transactions",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToMany",
+              "isOwner": false,
+              "targetTable": 11,
+              "targetColumn": 4,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          }
+        ],
+        "error": "",
+        "isOpen": false
+      },
+      {
+        "name": "transactions",
+        "isProtected": false,
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "primary": true,
+            "isProtected": true,
+            "default": "uuid()"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "default": "new Date()",
+            "defaultType": "value",
+            "isProtected": true
+          },
+          {
+            "name": "helpers",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToMany",
+              "isOwner": true,
+              "targetTable": 3,
+              "targetColumn": 3,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "mechanic_id",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToOne",
+              "isOwner": false,
+              "targetTable": 3,
+              "targetColumn": 4,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "items",
+            "type": "relation",
+            "relation": {
+              "relationType": "ManyToMany",
+              "isOwner": true,
+              "targetTable": 10,
+              "targetColumn": 9,
+              "onUpdate": "NO ACTION",
+              "onDelete": "NO ACTION"
+            }
+          },
+          {
+            "name": "total_price",
+            "type": "integer",
+            "isProtected": false,
+            "default": "0",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 0,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "vehicle_type",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": false,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "plate_number",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": false,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "customer_name",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          },
+          {
+            "name": "customer_phone",
+            "type": "varchar",
+            "isProtected": false,
+            "default": "",
+            "defaultType": "value",
+            "autoIncrement": false,
+            "index": true,
+            "nullable": true,
+            "primary": false,
+            "unique": false,
+            "length": 255,
+            "scale": null,
+            "precision": null
+          }
+        ],
+        "error": "",
+        "isOpen": true
+      }
+    ]
+  },
+  "env": [
+    {
+      "key": "APP_KEY",
+      "value": ""
+    },
+    {
+      "key": "DB_TYPE",
+      "value": ""
+    },
+    {
+      "key": "DB_HOST",
+      "value": ""
+    },
+    {
+      "key": "DB_PORT",
+      "value": ""
+    },
+    {
+      "key": "DB_NAME",
+      "value": ""
+    },
+    {
+      "key": "DB_USERNAME",
+      "value": ""
+    },
+    {
+      "key": "DB_PASSWORD",
+      "value": ""
+    }
+  ]
+}
