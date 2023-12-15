@@ -33,11 +33,12 @@ export default class Item {
     @orm.Property({ type: 'varchar', length: 500, index: false })
     description?: string;
 
-    // @orm.ManyToMany({ pivotTable: 'items_supplies_pivot', entity: () => Supply })
-    // supplies = new orm.Collection<Supply>(this);
     @orm.ManyToOne({ onDelete: "NO ACTION", onUpdateIntegrity: "NO ACTION" })
-    supplies!: Supply;
+    supply!: Supply;
 
     @orm.OneToMany(() => TransactionItem, opposite_table => opposite_table.item)
     transactions_items = new orm.Collection<TransactionItem>(this);
+
+    @orm.Property({ persist: false })
+    total_row: number;
 }

@@ -17,7 +17,7 @@ type ItemPayload = {
   stock: number;
 }
 
-type OrderType = Record<string, "ASC" | "DESC">
+export type OrderType = Record<string, any>
 
 export default class {
   static async findAll(req: FastifyRequest<{ Querystring: { supplier_id?: string; keywords?: string; limit: number; offset: number; paid: string; order_by?: string; } }>, rep: FastifyReply) {

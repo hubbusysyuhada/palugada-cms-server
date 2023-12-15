@@ -1,4 +1,4 @@
-# Awesome Project build with Mandoor Server Generator
+# Awesome Project build with Mandoor Server Generator by Muhammad Hafidz Hubbusysyuhada
 
 Steps to run this project:
 

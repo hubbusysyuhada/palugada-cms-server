@@ -38,7 +38,7 @@ export default class Supply {
     @orm.Property({ type: "json" })
     json_data = []
 
-    @orm.OneToMany(() => Item, opposite_table => opposite_table.supplies)
+    @orm.OneToMany(() => Item, opposite_table => opposite_table.supply)
     items = new orm.Collection<Item>(this);
 
     @orm.Property({ persist: false })
