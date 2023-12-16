@@ -39,16 +39,20 @@ export default class {
   }
 
   static async logIn(req: FastifyRequest<{ Body: { external_id: string; password: string } }>, rep: FastifyReply) {
+    console.log("login");
     const entityManager = await req.orm.getEm()
     const external_id = req.body.external_id
+    console.log("searching user");
     const user = await entityManager.findOne(User, { external_id }, { populate: ['role'] })
     if (user) {
+      console.log("user found");
       const isPasswordCorrect = await req.bcryptCompare(req.body.password, user.password)
       if (isPasswordCorrect) {
         const token = req.server.jwt.sign(user as UserJWT, { expiresIn: '1w' })
         return rep.code(200).send({ token, user: { external_id, role: user.role.name } })
       }
     }
+    console.log("user check failed");
     return rep.code(400).send({ message: "invalid External Id / Password" })
   }
 
