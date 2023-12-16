@@ -7,6 +7,7 @@ import routes from './routes'
 import MikroOrmInstance from './database'
 import fastifyStatic from '@fastify/static'
 import path from 'path'
+import env from './helpers/env'
 
 (async () => {
   const server = fastify()
@@ -26,7 +27,7 @@ import path from 'path'
     }
   })
 
-  server.listen({ port: 8080 }, (err, address) => {
+  server.listen({ port: +(env.PORT) || 8080 }, (err, address) => {
     if (err) {
       console.error(err)
       process.exit(1)
