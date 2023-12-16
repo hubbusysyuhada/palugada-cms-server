@@ -12,6 +12,12 @@
       "experimentalDecorators": true,
       "sourceMap": true,
       "esModuleInterop": true,
-      "typeRoots": ["@types"]
+      "typeRoots": [
+         "@types"
+      ],
    },
+   "exclude": [
+      "node_modules",
+      "typings",
+   ]
 }
