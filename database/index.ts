@@ -12,6 +12,7 @@ export default class MikroOrmInstance {
   static async init() {
     let options: Record<string, any> = {
       entities: ['./database/entity'],
+      type: env.DB_TYPE as "mongo" | "mysql" | "mariadb" | "postgresql" | "sqlite" | "better-sqlite",
       metadataProvider: TsMorphMetadataProvider,
       namingStrategy: UnderscoreNamingStrategy,
       pool: { max: 10, min: 2 },
@@ -25,7 +26,6 @@ export default class MikroOrmInstance {
         user: env.DB_USERNAME,
         password: env.DB_PASSWORD,
         host: env.DB_HOST,
-        type: env.DB_TYPE as "mongo" | "mysql" | "mariadb" | "postgresql" | "sqlite" | "better-sqlite",
       }
     }
 
