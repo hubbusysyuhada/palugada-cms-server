@@ -16,7 +16,9 @@ export default class MikroOrmInstance {
       metadataProvider: TsMorphMetadataProvider,
       namingStrategy: UnderscoreNamingStrategy,
       pool: { max: 10, min: 2 },
-      forceUtcTimezone: true
+      forceUtcTimezone: true,
+      driverOptions: { connection: { ssl: { rejectUnauthorized: false } } },
+      migrations: { disableForeignKeys: false }
     }
 
     if (env.DB_URL) options.clientUrl = env.DB_URL
