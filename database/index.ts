@@ -1,27 +1,35 @@
 import env from "../helpers/env";
-import { MikroORM, UnderscoreNamingStrategy } from "@mikro-orm/core";
+import { Configuration, Connection, IDatabaseDriver, MikroORM, Options, UnderscoreNamingStrategy } from "@mikro-orm/core";
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { MySqlDriver } from "@mikro-orm/mysql";
 import databaseSeeder from "./seeders/databaseSeeder";
 
 export default class MikroOrmInstance {
-  constructor (
+  constructor(
     private orm: MikroORM<MySqlDriver>
-  ) {}
+  ) { }
 
   static async init() {
-    const orm = await MikroORM.init<MySqlDriver>({
+    let options: Record<string, any> = {
       entities: ['./database/entity'],
-      dbName: env.DB_NAME,
-      user: env.DB_USERNAME,
-      password: env.DB_PASSWORD,
-      host: env.DB_HOST,
-      type: env.DB_TYPE as "mongo" | "mysql" | "mariadb" | "postgresql" | "sqlite" | "better-sqlite",
       metadataProvider: TsMorphMetadataProvider,
       namingStrategy: UnderscoreNamingStrategy,
       pool: { max: 10, min: 2 },
       forceUtcTimezone: true
-    })
+    }
+
+    if (env.DB_URL) options.clientUrl = env.DB_URL
+    else {
+      options = {
+        ...options, dbName: env.DB_NAME,
+        user: env.DB_USERNAME,
+        password: env.DB_PASSWORD,
+        host: env.DB_HOST,
+        type: env.DB_TYPE as "mongo" | "mysql" | "mariadb" | "postgresql" | "sqlite" | "better-sqlite",
+      }
+    }
+
+    const orm = await MikroORM.init<MySqlDriver>(options)
 
     const generator = orm.getSchemaGenerator()
     await generator.updateSchema()
