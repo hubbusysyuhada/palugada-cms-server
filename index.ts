@@ -27,7 +27,7 @@ import env from './helpers/env'
     }
   })
 
-  server.listen({ port: +(env.PORT) || 8080 }, (err, address) => {
+  server.listen({ port: +(process.env.PORT) || 8080 }, (err, address) => {
     if (err) {
       console.error(err)
       process.exit(1)
