@@ -16,6 +16,12 @@ import env from './helpers/env'
   
   server.register(bcrypt, { saltWorkFactor: 5 })
   server.register(routes, { prefix: 'api' })
+  server.register((server, opts, next) => {
+    server.get('/auth', (req, res) => {
+      res.redirect('/')
+    })
+    next()
+  })
   server.register(jwt, { secret: "secret" })
   server.decorateRequest('orm', orm)
   server.register(fastifyStatic, {
