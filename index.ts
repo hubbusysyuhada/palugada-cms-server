@@ -29,7 +29,7 @@ import env from './helpers/env'
   })
   server.register(cors, {
     origin: (origin, cb) => {
-      if (!origin || new URL(origin).hostname === 'localhost') cb(null, true)
+      // if (!origin || new URL(origin).hostname === 'localhost') cb(null, true) // currently disabled to support temporary live on cloud
     }
   })
 

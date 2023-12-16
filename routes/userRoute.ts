@@ -5,7 +5,6 @@ import AllowOwnerOnly from "../middleware/AllowOwner";
 
 
 const userRoute: FastifyPluginCallback = (server, opts, next) => {
-  console.log("into user route");
   server.get('/users', {preHandler: [AllowOwnerOnly]}, UserHandler.getAll)
   server.post('/register', {preHandler: [AllowOwnerOnly]}, UserHandler.register)
   server.post('/change-role/:id', {preHandler: [AllowOwnerOnly]}, UserHandler.changeRole)
