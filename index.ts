@@ -8,6 +8,7 @@ import MikroOrmInstance from './database'
 import fastifyStatic from '@fastify/static'
 import path from 'path'
 
+console.log("ahahhaa");
 (async () => {
   const server = fastify()
 
