@@ -29,7 +29,6 @@ export default class {
   }
 
   static async findById(req: FastifyRequest<{ Params: { id: number } }>, rep: FastifyReply) {
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const entityManager = await req.orm.getEm()
     const id = req.params.id
     const data = await entityManager.findOne(Supplier, { id }, {})
@@ -37,7 +36,6 @@ export default class {
   }
 
   static async create(req: FastifyRequest<{ Body: Record<string, any> }>, rep: FastifyReply) {
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const entityManager = await req.orm.getEm()
     const data = new Supplier()
     for (const key in req.body) {
@@ -54,7 +52,6 @@ export default class {
     }>,
     rep: FastifyReply) {
     const entityManager = await req.orm.getEm()
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const id = req.params.id
     const data = await entityManager.findOneOrFail(Supplier, { id })
     for (const key in req.body) {
@@ -65,7 +62,6 @@ export default class {
   }
 
   static async delete(req: FastifyRequest<{ Params: { id: number } }>, rep: FastifyReply) {
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const entityManager = await req.orm.getEm()
     const id = req.params.id
     const data = await entityManager.findOneOrFail(Supplier, { id })

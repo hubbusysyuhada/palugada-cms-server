@@ -4,6 +4,12 @@ import SubCategory from './SubCategory';
 import Supply from './Supply';
 import TransactionItem from './TransactionItem';
 
+export enum UnitType {
+    GALOON = 'gln',
+    LITER = 'ltr',
+    SET = 'set'
+}
+
 @orm.Entity({ tableName: "items", comment: "equal to \"barang\" table" })
 export default class Item {
     @orm.PrimaryKey({ autoincrement: true })
@@ -32,6 +38,12 @@ export default class Item {
 
     @orm.Property({ type: 'varchar', length: 500, index: false })
     description?: string;
+
+    @orm.Property({ type: 'varchar', length: 255, index: true })
+    name: string;
+
+    @orm.Enum(() => UnitType)
+    unit: UnitType = UnitType.SET
 
     @orm.ManyToOne({ onDelete: "NO ACTION", onUpdateIntegrity: "NO ACTION" })
     supply!: Supply;

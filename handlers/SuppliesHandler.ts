@@ -2,7 +2,7 @@ import * as qs from "qs"
 import { FastifyReply, FastifyRequest } from "fastify";
 import Supply from "../database/entity/Supply";
 import Supplier from "../database/entity/Supplier";
-import Item from "../database/entity/Item";
+import Item, { UnitType } from "../database/entity/Item";
 import Rack from "../database/entity/Rack";
 import SubCategory from "../database/entity/SubCategory";
 import _ from "lodash";
@@ -15,6 +15,8 @@ type ItemPayload = {
   selling_price: number;
   buying_price: number;
   stock: number;
+  unit: UnitType;
+  name: string;
 }
 
 export type OrderType = Record<string, any>
@@ -43,7 +45,6 @@ export default class {
   }
 
   static async findById(req: FastifyRequest<{ Params: { id: number } }>, rep: FastifyReply) {
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const entityManager = await req.orm.getEm()
     const id = req.params.id
     const data = await entityManager.findOne(Supply, { id }, { })
@@ -51,7 +52,6 @@ export default class {
   }
 
   static async create(req: FastifyRequest<{ Body: Record<string, any> }>, rep: FastifyReply) {
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const entityManager = await req.orm.getEm()
     try {
       await entityManager.begin()
@@ -61,6 +61,7 @@ export default class {
       supply.due_date = new Date(req.body.due_date)
       supply.issued_date = new Date(req.body.issued_date)
       supply.is_paid = req.body.is_paid
+      supply.notes = req.body.notes
 
       let totalPrice = 0
       supply.json_data = []
@@ -74,6 +75,8 @@ export default class {
         item.stock = i.stock
         item.rack = await entityManager.findOneOrFail(Rack, { id: i.rack_id })
         item.sub_category = await entityManager.findOneOrFail(SubCategory, { id: i.sub_category_id })
+        item.unit = i.unit
+        item.name = i.name
 
         supply.items.add(item)
         totalPrice += item.buying_price * item.stock
@@ -85,7 +88,8 @@ export default class {
           buying_price: item.buying_price,
           selling_price: item.selling_price,
           sub_category_id: item.sub_category.id,
-          rack_id: item.rack.id
+          rack_id: item.rack.id,
+          name: item.name
         })
       }
       
@@ -107,7 +111,6 @@ export default class {
     }>,
     rep: FastifyReply) {
     const entityManager = await req.orm.getEm()
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const id = req.params.id
     const data = await entityManager.findOneOrFail(Supply, { id })
     for (const key in req.body) {
@@ -118,7 +121,6 @@ export default class {
   }
 
   static async delete(req: FastifyRequest<{ Params: { id: number } }>, rep: FastifyReply) {
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const entityManager = await req.orm.getEm()
     const id = req.params.id
     const data = await entityManager.findOneOrFail(Supply, { id })

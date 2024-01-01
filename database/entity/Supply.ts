@@ -17,9 +17,6 @@ export default class Supply {
     @orm.Property({ type: 'integer', index: false })
     total_price: number = 0;
 
-    // @orm.Property({ type: 'timestamp with timezone' })
-    // entry_date: Date = new Date();
-
     @orm.Property({ type: 'varchar', length: 255, index: false })
     invoice_number?: string;
 
@@ -32,8 +29,8 @@ export default class Supply {
     @orm.Property({ type: 'timestamp with timezone' })
     due_date: Date = new Date(new Date().setDate(new Date().getDate() + 7));
 
-    // @orm.Property({ type: 'integer', index: false })
-    // amount: number = 0;
+    @orm.Property({ type: 'tinytext' })
+    notes?: string;
 
     @orm.Property({ type: "json" })
     json_data = []

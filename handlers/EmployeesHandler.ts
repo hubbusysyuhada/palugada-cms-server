@@ -20,7 +20,6 @@ export default class {
   }
 
   static async findById(req: FastifyRequest<{ Params: { id: string } }>, rep: FastifyReply) {
-    // const {  } = qs.parse(req.query as string) as QueryProps
     const entityManager = await req.orm.getEm()
     const id = req.params.id
     const data = await entityManager.findOne(Employee, { id }, {})

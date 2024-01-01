@@ -14,8 +14,8 @@ export default class Rack {
     @orm.Property({ type: 'varchar', length: 255, index: false })
     name: string;
 
-    @orm.Property({ type: 'integer', index: false })
-    storage_number: number;
+    @orm.Property({ type: 'varchar', index: false })
+    storage_number: string;
 
     @orm.OneToMany(() => Item, opposite_table => opposite_table.rack)
     items = new orm.Collection<Item>(this);

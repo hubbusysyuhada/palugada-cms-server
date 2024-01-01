@@ -19,12 +19,9 @@ export default class Employee {
     @orm.Property({ type: 'boolean' })
     is_active: boolean = true;
 
+    @orm.ManyToMany({ pivotTable: 'helped_transactions_mechanic_pivot', entity: () => Transaction })
+    helped_transactions = new orm.Collection<Transaction>(this);
+
     @orm.Property({ persist: false })
     total_row: number;
-
-    // @orm.ManyToMany({ pivotTable: 'helped_transactions_mechanic_pivot', entity: () => Transaction })
-    // helped_transactions = new orm.Collection<Transaction>(this);
-
-    // @orm.OneToMany(() => Transaction, opposite_table => opposite_table.mechanic)
-    // main_mechanic_transactions = new orm.Collection<Transaction>(this);
 }
