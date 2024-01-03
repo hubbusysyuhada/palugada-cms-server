@@ -9,6 +9,8 @@ const transactionsRoute: FastifyPluginCallback = (server, opts, next) => {
 
   server.get('/', { preHandler: [AllowAuthorized] }, Handler.findAll)
   server.post('/', { preHandler: [AllowAuthorized] }, Handler.create)
+  // server.post('/seed', { preHandler: [AllowAuthorized] }, Handler.seed)
+  server.get('/insight', { preHandler: [AllowAuthorized] }, Handler.insight)
   server.get('/all-employees', { preHandler: [AllowAuthorized] }, EmployeesHandler.findAll)
   server.get('/all-items', { preHandler: [AllowAuthorized] }, ItemsHandler.findAll)
   server.get('/:id', { preHandler: [AllowAuthorized] }, Handler.findById)

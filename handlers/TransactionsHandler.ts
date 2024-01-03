@@ -6,6 +6,8 @@ import Item from "../database/entity/Item";
 import TransactionItem from "../database/entity/TransactionItem";
 import { OrderType } from "./SuppliesHandler";
 import parseNumber from "../helpers/parseNumber";
+import seeder from "../helpers/seeder";
+import Insight from "../helpers/insight";
 
 type CreateTransactionPayloadType = {
   vehicle_type: string;
@@ -26,7 +28,7 @@ export default class {
     const sort: OrderType[] = []
     if (req.query.start_date) condition.push({ created_at: { $gte: new Date(req.query.start_date) } })
     if (req.query.end_date) condition.push({ created_at: { $lte: new Date(req.query.end_date) } })
-    if (req.query.type) condition.push({ type:{ $in: JSON.parse(req.query.type) } })
+    if (req.query.type) condition.push({ type: { $in: JSON.parse(req.query.type) } })
     if (req.query.keywords) condition.push({
       $or: [
         { invoice: { $like: `%${req.query.keywords}%` } },
@@ -55,7 +57,7 @@ export default class {
     const totalRow = await q.getCount()
     const data = await q.getResult()
     data.forEach(d => d.total_row = totalRow)
-    
+
     rep.code(200).send({ data })
   }
 
@@ -142,5 +144,23 @@ export default class {
     const data = await entityManager.findOneOrFail(Transaction, { id })
     await entityManager.remove(data).flush()
     rep.code(200).send({ message: `Transaction (id: ${id}) deleted` })
+  }
+
+  static async insight(req: FastifyRequest<{ Querystring: { start_date: string; end_date: string; series: 'daily' | 'weekly' | 'monthly' | 'once' } }>, rep: FastifyReply) {
+    const entityManager = await req.orm.getEm()
+    const transactions = await entityManager.find(Transaction, {
+      $and: [
+        { created_at: { $gte: new Date(req.query.start_date) } },
+        { created_at: { $lte: new Date(req.query.end_date) } },
+      ]
+    })
+    const data = Insight.calculate({ transactions, series: req.query.series, startDate: req.query.start_date, endDate: req.query.end_date })
+    rep.code(200).send({ data })
+  }
+
+  static async seed(req: FastifyRequest, rep: FastifyReply) {
+    const entityManager = await req.orm.getEm()
+    await seeder(entityManager)
+    rep.send('done')
   }
 }
