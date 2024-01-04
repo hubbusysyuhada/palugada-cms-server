@@ -2,6 +2,7 @@ require('dotenv').config()
 
 export default {
   APP_KEY: process.env.APP_KEY,
+  APP_PERMISSION_TOKEN: process.env.APP_PERMISSION_TOKEN,
   DB_TYPE: process.env.DB_TYPE,
   DB_HOST: process.env.DB_HOST,
   DB_PORT: process.env.DB_PORT,

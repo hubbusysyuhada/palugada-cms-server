@@ -7,7 +7,7 @@ import routes from './routes'
 import MikroOrmInstance from './database'
 import fastifyStatic from '@fastify/static'
 import path from 'path'
-// import { machineIdSync } from 'node-machine-id'
+import validateMachine from './helpers/validateMachine'
 
 (async () => {
   const server = fastify()
@@ -34,9 +34,8 @@ import path from 'path'
     }
   })
 
-  // console.log(machineIdSync());
-  server.listen({ port: +(process.env.PORT) || 8080, host: '0.0.0.0' }, (err, address) => {
-    if (err) {
+  server.listen({ port: +(process.env.PORT) || 8080, host: '0.0.0.0' }, async (err, address) => {
+    if (err || await validateMachine()) {
       console.error(err)
       process.exit(1)
     }
