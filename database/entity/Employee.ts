@@ -16,6 +16,9 @@ export default class Employee {
     @orm.Property({ type: 'varchar', length: 255, index: true })
     idKaryawan: string;
 
+    @orm.Property({ type: 'varchar', length: 255, index: true })
+    title : string;
+
     @orm.Property({ type: 'boolean' })
     is_active: boolean = true;
 
