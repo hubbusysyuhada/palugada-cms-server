@@ -36,6 +36,9 @@ export default class Transaction {
     plate_number?: string;
 
     @orm.Property({ type: 'varchar', length: 255, index: true })
+    machine_number?: string;
+
+    @orm.Property({ type: 'varchar', length: 255, index: true })
     customer_name?: string;
 
     @orm.Property({ type: 'varchar', length: 255, index: true })
