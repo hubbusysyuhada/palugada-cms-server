@@ -15,6 +15,7 @@ type CreateTransactionPayloadType = {
   customer_name: string;
   customer_phone: string;
   notes: string;
+  discount: number;
   type: TransactionType;
   services: { name: string; price: number }[];
   items: { id: number; amount: number }[];
@@ -80,6 +81,7 @@ export default class {
       const transactionCode = parseNumber(todaysTransactionCount + 1)
       const services: Record<string, any>[] = []
       transaction.total_price = 0
+      transaction.discount = req.body.discount
       transaction.customer_name = req.body.customer_name
       transaction.customer_phone = req.body.customer_phone
       transaction.notes = req.body.notes
@@ -88,6 +90,7 @@ export default class {
       transaction.created_at = now
       transaction.invoice = dateCode + typeCode + transactionCode
       transaction.type = req.body.type
+      transaction.total_price -= transaction.discount
 
       req.body.services.forEach((s: { name: string; price: number; }) => {
         services.push(s)

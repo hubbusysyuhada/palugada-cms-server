@@ -50,6 +50,9 @@ export default class Transaction {
     @orm.Property({ type: 'tinytext' })
     notes?: string;
 
+    @orm.Property({ type: 'integer', index: false })
+    discount: number = 0;
+
     @orm.Property({ type: 'json', nullable: true })
     additional_services: Record<string, any>[] = []
 
